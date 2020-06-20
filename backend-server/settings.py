@@ -7,6 +7,3 @@ load_dotenv( dotenv_path )
 
 # Accessing Variables
 riot_key = os.getenv('RIOT_KEY')
-
-
-
