@@ -1,0 +1,6 @@
+# dependencies
+/backend-server/venv/
+/backend-server/__pycache__/
+
+# misc
+/backend-server/.env

@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_restx import Resource, Api
 from riotwatcher import TftWatcher, ApiError
+from settings import riot_key
 
 app = Flask(__name__)
+api = Api(app)
 
-server = 'na1'
-region = 'americas'
-
-api_key = 'RGAPI-8bfe1150-dbda-4ff2-b511-3e921eb1f2bc'
-
+api_key = riot_key
 tft = TftWatcher(api_key)
 
 regions = {
@@ -24,69 +23,82 @@ regions = {
 	'ru': 'europe'	
 }
 
-
-@app.route('/')
-@app.route('/api/summoner')
-def index():
-	return getSummoner()
-	
-@app.route('/api/matchhistory')	
-def getMatchHistory():	
-	
-	summoner_json = getSummoner()
-
-	puuid = summoner_json['puuid']
-	region = regions[server]
-		
-	# watcher = tft.summoner.by_name(server, summoner_name)
-	# puuid = watcher['puuid']
-	matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=5)
-	
-	matchhistory = []
-	placements = []
-	comp = []
-	for matchid in matchlist:
-		j = tft.match.by_id(region='americas', match_id=matchid)
-
-		# print('\n-----------------MATCH JSON-----------\n')
-		# print(j)
-
-		idx = j['metadata']['participants'].index(puuid)
-		print(idx)
-		# print(j['metadata']['participants'][idx])
-
-		player = j['info']['participants'][idx]
-		traits_list = player['traits']
-		
-		match_dict = {}
-
-		trait_counts = []
-		for trait_json in traits_list:
-			string = str(trait_json['num_units']) + " " + trait_json['name']
-			trait_counts.append(string)
-			
-		match_dict['comp'] = '   '.join(trait_counts)
-		match_dict['position'] = player['placement']
-		matchhistory.append(match_dict)
-			
-		# comp.append('   '.join(trait_counts))
-		# placement = player['placement']
-		# placements.append(placement)
-	
-	return jsonify(
-		matchhistory=matchhistory
-	)
-	
-	# return watcher
-	
+server, region = 'na1', 'americas'
 
 def getSummoner():
-	summoner_name = request.args.get('summoner')
-	server = request.args.get('server')
-	return tft.summoner.by_name(server, summoner_name)
+  """
+  Retrieves summoner json object
 
-	
+  Returns
+  -------
+  Json object that contains identifier information on summoner 
+  """
+  summoner_name = request.args.get('summoner')
+  server = request.args.get('server')
+  return tft.summoner.by_name(server, summoner_name)
+
+@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+class SummonerInfo(Resource):
+  """
+  Returns identifier information on summoner passed through Query params
+  {
+    "id": {string}, 
+    "accountId": {string},
+    "puuid": {string},
+    "name": {string},
+    "profileIconId": {string},
+    "revisionDate": {string},
+    "summonerLevel": {string}
+  }
+  """
+  def get(self):
+    return getSummoner()
+
+@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+class MatchHistory(Resource):
+  """
+  Returns the information on the last x matches on a summoner
+  {
+    "matchhistory": [
+      {
+        "comp": {string}, 
+        "position": {int}
+      }, 
+      ...
+    ]
+  }
+  """
+  def get(self):
+    summoner_json = getSummoner()
+
+    puuid = summoner_json['puuid']
+    region = regions[server]
+
+    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=5)
+    matchhistory = []
+    for matchid in matchlist:
+      j = tft.match.by_id(region='americas', match_id=matchid)
+
+      idx = j['metadata']['participants'].index(puuid)
+      player = j['info']['participants'][idx]
+      
+      # Store traits per other player
+      traits_list = player['traits']
+      trait_counts = []
+      for trait_json in traits_list:
+        string = str(trait_json['num_units']) + " " + trait_json['name']
+        trait_counts.append(string)
+      
+      # Creates an object for other players in the same match 
+      match_dict = {}
+      match_dict['comp'] = '   '.join(trait_counts)
+      match_dict['position'] = player['placement']
+      matchhistory.append(match_dict)
+    return jsonify(matchhistory=matchhistory)
+
+# Endpoints
+api.add_resource(SummonerInfo, '/api', '/api/summonerinfo')
+api.add_resource(MatchHistory, '/api/matchhistory')
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+  app.run(debug=True, host='0.0.0.0', port=8000)
