@@ -1,8 +1,7 @@
 # dependencies
-/backend-server/venv/
-/backend-server/__pycache__/
-
-/frontend/node_modules
+venv/
+__pycache__/
+node_modules
 .pnp
 .pnp.js
 
