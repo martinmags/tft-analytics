@@ -19,7 +19,7 @@ const styles =  theme =>({
     white:{
       backgroundColor:'#FFFFFF'
     },
-   
+ 
 });
 
 class SummonerRankCard extends React.Component{
@@ -27,38 +27,27 @@ class SummonerRankCard extends React.Component{
     render(){
         const {classes} = this.props;
         return(             
-            <Box  height="120px"  className={classes.white } m={2} borderRadius={15} >
-              <Grid justify="center" alignItems="center" container spacing={1} direction="row">
-                <Grid item xs={2} >
-                  <Box>
+            <Box className={classes.white} m={2} borderRadius={15}   display="flex" alignItems="center" height="120px"    >
+                <Box flexGrow="1" mr={2} ml={4}>
                     <Avatar alt="User Avatar" variant="square" src={RankGold} className={classes.large}/>
-                  </Box>
-                </Grid>
-                <Grid item xs={10} >
-                  <Box className={classes.white } m={2}  > 
-                    <Grid  container direction="row">
-                      <Grid item xs={12}>
-                        <Typography variant="h4">  
-                          Rank 
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <Typography variant="h6">  
-                          {this.props.rank} {this.props.rankNum}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography variant="h6">  
-                        {this.props.lp} LP
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} >
+                </Box>
+                <Box flexGrow="5" ml={2} mr={4}  >
+                    <Box display="flex" my={1} alignItems="center" >
+                        <Box flexGrow="4" justifyContent="flex-end" >
+                            <Typography   variant="h6" >  
+                                {this.props.rank} {this.props.rankNum}
+                            </Typography>
+                        </Box>
+                        <Box flexGrow="1" textAlign="right" >
+                            <Typography align="right" variant="caption" >  
+                                {this.props.lp} LP
+                            </Typography>
+                        </Box>
+                    </Box>
+                    <Box my={1}>
                         <LinearProgress variant="determinate" value={this.props.lp}  />
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
+                    </Box>
+                </Box>
             </Box>
         );
     }
@@ -66,3 +55,4 @@ class SummonerRankCard extends React.Component{
 }
 
 export default withStyles(styles)(SummonerRankCard);
+    

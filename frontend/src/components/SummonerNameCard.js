@@ -26,25 +26,20 @@ class SummonerNameCard extends React.Component{
     render(){
         const {classes} = this.props;
         return(             
-        <Box height="120px" className={classes.white } m={2}borderRadius={15}  >
-        <Grid   justify="center" alignItems="center" container spacing={1} direction="row" >
-          <Grid item  xs={2 } >
-            <Box >
-              <Avatar alt="User Avatar" src = {this.props.icon} className={classes.large}/>
+            <Box  className={classes.white} m={2} borderRadius={15}   display="flex" alignItems="center" height="120px"    >
+                <Box flexGrow="1" mr={2} ml={4} >
+                    <Avatar   alt="User Avatar" src = {this.props.icon} className={classes.large}/>
+                </Box>
+                <Box flexGrow="5"ml={2} mr={4}   >
+                    <Typography variant="h5" my={2}>  
+                        {this.props.name}
+                    </Typography>
+                    <Typography variant="caption" my={2}>
+                        {this.props.region}
+                    </Typography>
+                </Box>
             </Box>
-          </Grid>
-          <Grid item  xs={10}>
-            <Container  className={classes.white }  >
-              <Typography variant="h4">  
-                {this.props.name}
-              </Typography>
-              <Typography variant="h6">
-                {this.props.region}
-              </Typography>
-            </Container>
-          </Grid>
-        </Grid>
-      </Box>);
+        );
     }
 
 }

@@ -12,7 +12,6 @@ const useStyles =  makeStyles((theme) =>({
     backgroundColor:'#EBEBEB',
   },
  
- 
 }));
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
@@ -23,7 +22,7 @@ function SummonerPage() {
  
   return (  
       <Container  maxWidth='xl'  className={classes.root ,classes.grey}>
-        <Grid  container   spacing={0} direction="row">
+        <Grid  container   spacing={0} direction="row"   >
           <Grid item xs={12} md={6}>
             <SummonerNameCard 
               name = "BabyGerber"
