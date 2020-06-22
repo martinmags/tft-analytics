@@ -13,10 +13,10 @@ regions = {
 	'na1': 'americas',
 	'br1': 'americas',
 	'oc1': 'americas',
-    'la1': 'americas',
-    'la2': 'americas',
+  'la1': 'americas',
+  'la2': 'americas',
 	'jp1': 'asia',
-    'kr': 'asia',
+  'kr': 'asia',
 	'eun1': 'europe',
 	'euw1': 'europe',
 	'tr1': 'europe',
@@ -86,7 +86,7 @@ class MatchHistory(Resource):
       traits_list = player['traits']
       trait_counts = []
       for trait_json in traits_list:
-        string = str(trait_json['num_units']) + " " + trait_json['name']
+        string = str(trait_json['tier_current']) + " " + trait_json['name']
         trait_counts.append(string)
       
       # Creates an object for other players in the same match 
