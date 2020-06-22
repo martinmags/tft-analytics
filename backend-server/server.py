@@ -2,9 +2,12 @@ from flask import Flask, request, jsonify
 from flask_restx import Resource, Api
 from riotwatcher import TftWatcher, ApiError
 from settings import riot_key
+from flask_cors import CORS
 
 app = Flask(__name__)
 api = Api(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 api_key = riot_key
 tft = TftWatcher(api_key)
