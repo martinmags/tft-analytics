@@ -3,5 +3,6 @@
 /backend-server/__pycache__/
 
 # misc
-/backend-server/.env
-/.vscode
+.env
+.vscode
+.DS_Store
