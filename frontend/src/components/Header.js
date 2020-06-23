@@ -1,7 +1,8 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Grid, TextField, MenuItem, FormControl, InputLabel, Select } from '@material-ui/core';
+import {  Button, Grid, TextField, MenuItem, FormControl, InputLabel, Select } from '@material-ui/core'; 
 import Alert from '@material-ui/lab/Alert';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 function Header() {
@@ -28,14 +29,7 @@ function Header() {
 
         <Grid item xs={6}>
           <form onSubmit={ handleSubmit(onSubmit) }>
-            <TextField   
-              variant="filled"
-              inputRef={register({ required: true })}
-              label="Summoner Name"
-              size="small"
-              name="summonername"
-            />
-            <Controller
+          <Controller
               as={
                 <FormControl variant="filled" size="small">
                   <InputLabel shrink>Region</InputLabel>
@@ -48,7 +42,15 @@ function Header() {
               name="region"
               defaultValue="na1"
             />              
-            <Button type="submit" size="small" variant="contained" color="primary">Search</Button>
+            <TextField   
+              variant="filled"
+              inputRef={register({ required: true })}
+              label="Summoner Name"
+              size="small"
+              name="summonername"
+            />
+
+            <Button type="submit" size="small" variant="contained" color="primary"   startIcon={<SearchIcon /> }   >Search</Button>
           </form>
 
           {errors.summonername && <Alert severity="error">Summoner Name is required.</Alert>}
