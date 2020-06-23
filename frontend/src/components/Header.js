@@ -46,6 +46,7 @@ function Header() {
               }
               control={control}
               name="region"
+              defaultValue="na1"
             />              
             <Button type="submit" size="small" variant="contained" color="primary">Search</Button>
           </form>

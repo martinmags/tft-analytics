@@ -1,6 +1,6 @@
 import React from 'react';   
 import { createMuiTheme , makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
-import {  Grid, Container, Box, Typography } from '@material-ui/core';
+import {  Grid, Box, Typography } from '@material-ui/core';
 import SummonerNameCard from '../components/SummonerNameCard';
 import SummonerRankCard from '../components/SummonerRankCard';
 import MatchHistoryTabSelector  from '../components/MatchHistoryTabSelector';
