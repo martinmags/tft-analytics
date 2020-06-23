@@ -33,13 +33,13 @@ class SummonerRankCard extends React.Component{
                 </Box>
                 <Box flexGrow="5" ml={2} mr={4}  >
                     <Box display="flex" my={1} alignItems="center" >
-                        <Box flexGrow="4" justifyContent="flex-end" >
+                        <Box flexGrow="4"  >
                             <Typography   variant="h6" >  
                                 {this.props.rank} {this.props.rankNum}
                             </Typography>
                         </Box>
                         <Box flexGrow="1" textAlign="right" >
-                            <Typography align="right" variant="caption" >  
+                            <Typography  variant="caption" >  
                                 {this.props.lp} LP
                             </Typography>
                         </Box>
