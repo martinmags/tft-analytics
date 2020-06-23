@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {  withStyles } from '@material-ui/core/styles';
-import { LinearProgress,Typography,Avatar ,Grid, Box } from '@material-ui/core';
+import { LinearProgress,Typography,Avatar  , Box } from '@material-ui/core';
 
 import RankGold from '../assets/ranks/Emblem_Gold.png';
 const styles =  theme =>({
