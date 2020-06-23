@@ -1,6 +1,6 @@
 import React from 'react';
 import {  withStyles } from '@material-ui/core/styles';
-import {  Typography,Avatar, Grid, Container, Box } from '@material-ui/core';
+import {  Typography,Avatar,  Box } from '@material-ui/core';
 
 const styles =  theme =>({
     root: {
@@ -30,7 +30,7 @@ class SummonerNameCard extends React.Component{
                 <Box flexGrow="1" mr={2} ml={4} >
                     <Avatar   alt="User Avatar" src = {this.props.icon} className={classes.large}/>
                 </Box>
-                <Box flexGrow="5"ml={2} mr={4}   >
+                <Box flexGrow="5" ml={2} mr={4}   >
                     <Typography variant="h5" my={2}>  
                         {this.props.name}
                     </Typography>
