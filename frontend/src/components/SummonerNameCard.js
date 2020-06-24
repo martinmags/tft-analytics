@@ -1,47 +1,32 @@
-import React from 'react';
-import {  withStyles } from '@material-ui/core/styles';
-import {  Typography,Avatar , Box } from '@material-ui/core';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Card, CardContent, CardHeader, Typography, Avatar } from '@material-ui/core';
 
-const styles =  theme =>({
-    root: {
-      flexGrow: 1,
-    },
-    small: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-    },
-    large: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
-    },
- 
-    white:{
-      backgroundColor:'#FFFFFF'
-    },
-   
-});
+const useStyles =  makeStyles((theme) =>({
+  root: {
+    height: 125
+  }
+}));
 
-class SummonerNameCard extends React.Component{
-  
-    render(){
-        const {classes} = this.props;
-        return(             
-            <Box  className={classes.white} m={2} borderRadius={15}   display="flex" alignItems="center" height="120px"    >
-                <Box flexGrow="1" mr={2} ml={4} >
-                    <Avatar   alt="User Avatar" src = {this.props.icon} className={classes.large}/>
-                </Box>
-                <Box flexGrow="5"ml={2} mr={4}   >
-                    <Typography variant="h5" my={2}>  
-                        {this.props.name}
-                    </Typography>
-                    <Typography variant="caption" my={2}>
-                        {this.props.region}
-                    </Typography>
-                </Box>
-            </Box>
-        );
-    }
+function SummonerNameCard() {
+  const classes = useStyles();
 
+  return (
+    <Grid item xs={10} sm={3}>
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar alt="User Avatar" src ="http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/588.png"/>
+          }
+          title="BabyGerber"
+          subheader="NA"
+        />
+        <CardContent>
+          <Typography>Extra summoner info here</Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  )
 }
 
-export default withStyles(styles)(SummonerNameCard);
+export default SummonerNameCard
