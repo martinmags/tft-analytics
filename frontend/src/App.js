@@ -15,7 +15,7 @@ import SummonerPage from './templates/SummonerPage'
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
-function App() {
+function App(props) {
   return (
     <div className="App">
       <CssBaseline/>
@@ -25,8 +25,17 @@ function App() {
         <Link to="/SummonerPage">fake link for testing</Link>
         <Switch>
           <Route exact path="/"> <HomePage/> </Route>
-          <Route exact path="/summonerstats/:summonername/:region"> <SummonerPage/> </Route>
-          <Route path="/SummonerPage"><SummonerPage></SummonerPage></Route>
+          <Route 
+              exact
+              path="/summonerinfo/:summoner/:server"
+              // location={props.location}
+              // key={props.location.key}
+              // render={(props) => (
+              //   <SummonerPage {...props} key={props.location.key} />
+              // )}
+          > <SummonerPage/> </Route> 
+          
+          {/* <Route path="/SummonerPage"><SummonerPage></SummonerPage></Route> */}
         </Switch>
       </Router>
       </ThemeProvider>
