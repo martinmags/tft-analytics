@@ -97,6 +97,14 @@ class MatchHistory(Resource):
       match_dict['comp'] = '   '.join(trait_counts)
       match_dict['position'] = player['placement']
       matchhistory.append(match_dict)
+      
+      units_list = player['units']
+      for units_json in units_list:
+        units_json['character_id'] = units_json['character_id'].replace('TFT3_', '')
+      
+      match_dict['units'] = units_list
+      # matchhistory.append(units_list)
+      
     return jsonify(matchhistory=matchhistory)
 
 # Endpoints
