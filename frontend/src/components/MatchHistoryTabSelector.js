@@ -11,8 +11,8 @@ const styles =  theme =>({
 });
 
 class MatchHistoryTabSelector extends React.Component{
-  
     render(){
+        /* Use <Grid container item direction="column" className={classes.grey} justify="flex-end" spacing={3}> as wrapper*/
         const {classes} = this.props;
         return(             
             <Box   className={classes.white} m={2} borderRadius={15}   display="flex" flexWrap="wrap" justifyItems="center" height="120px"     >
@@ -33,7 +33,6 @@ class MatchHistoryTabSelector extends React.Component{
         </Box>
         );
     }
-
 }
 
 export default withStyles(styles)(MatchHistoryTabSelector);

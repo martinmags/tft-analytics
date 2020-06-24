@@ -1,35 +1,21 @@
 import React from 'react';   
-import {  makeStyles   } from '@material-ui/core/styles';
-import {  Grid, Box  } from '@material-ui/core';
-import SummonerNameCard from '../components/SummonerNameCard';
-import SummonerRankCard from '../components/SummonerRankCard';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import SummonerInfo from '../components/SummonerInfo';
+import MatchHistoryCard from '../components/MatchHistoryCard';
 import MatchHistoryTabSelector  from '../components/MatchHistoryTabSelector';
 import {
   useParams
 } from "react-router-dom";
 
-
 import MatchSummaryCard from '../components/MatchSummaryCard';
 import { useState } from 'react';
+
 const useStyles =  makeStyles((theme) =>({
   root: {
-    flexGrow: 1,
+    paddingTop: 8*3
   },
- 
-  grey: {
-    backgroundColor:'#EBEBEB',
-  },    
-  white:{
-    backgroundColor:'#FFFFFF'
-  },
-  whiteText:{
-    color:'#FFFFFF'
-  },
-  black:{
-    backgroundColor:'#000000'
-  }
 }));
- 
 
 function SummonerPage(props) {
   const classes = useStyles();
@@ -58,39 +44,19 @@ function SummonerPage(props) {
       console.log(profileIconId);
     })}, 0
   );
-    
-  return (  
-    <Box  className={ classes.grey}>
-      {console.log( summoner )}
-      {}
-      <h1>Summoner: { summoner } </h1>
-      
-        <Box mx={{  xs:2, md:16}} >
-            <Grid   container   spacing={0} direction="row"   >
-                <Grid item xs={12} md={6}>
-                    <SummonerNameCard 
-                        name = {name}
-                        region = "NA"
-                        icon = {`http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${profileIconId}.png`}
-                    >
-                    </SummonerNameCard>
-                </Grid>          
-                <Grid item xs={12} md={6}>
-                    <SummonerRankCard
-                        rank ="Gold"
-                        rankNum = "69"
-                        lp = "42"
-                    >
-                    </SummonerRankCard>
-                </Grid>
-                <Grid item xs={12}>
-                    <MatchHistoryTabSelector></MatchHistoryTabSelector>
-                </Grid>            
-                <MatchSummaryCard></MatchSummaryCard>
-            </Grid>
-        </Box> 
-    </Box>
-    );
+
+  return (
+    <div className={classes.root}>
+      <Grid container direction="column" spacing={3}>
+        <SummonerInfo /> 
+        {/* TODO: Setup <Switch> Routing to render depending on "All"   "Ranked"   "Normal" */}
+        <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
+        <MatchHistoryCard /> 
+        <MatchHistoryCard /> 
+        <MatchHistoryCard /> 
+      </Grid>
+    </div>
+  );
 }
 
 export default SummonerPage;

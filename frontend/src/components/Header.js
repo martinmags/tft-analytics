@@ -35,8 +35,8 @@ function Header() {
     <div>
       {console.log(redirPath)}
       {toSummonerPage ? <Redirect to={redirPath} /> : setTimeout(() => setToSummonerPage(false), 0)}
-      
-      <Grid container direction="column" justify="center" alignItems="center" spacing={2}>
+
+      <Grid container direction="column" justify="center" alignItems="center">
         <Grid item xs={12}>
           <h1>Welcome to TFT-Analytics</h1>
         </Grid>

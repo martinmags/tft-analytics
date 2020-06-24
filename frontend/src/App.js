@@ -18,8 +18,8 @@ theme = responsiveFontSizes(theme);
 function App(props) {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
       <CssBaseline/>
+      <ThemeProvider theme={theme}>
       <Router>
         <Header/>
         <Link to="/SummonerPage">fake link for testing</Link>
