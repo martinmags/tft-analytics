@@ -3,8 +3,7 @@ import {  Grid } from '@material-ui/core';
 import SummonerNameCard from '../components/SummonerNameCard';
 import SummonerRankCard from '../components/SummonerRankCard';
 
-function SummonerInfo() {
-
+function SummonerInfo(props) {
   return (
     <Grid
       container
@@ -13,7 +12,7 @@ function SummonerInfo() {
       justify="space-evenly"
       xs={12}
     >
-      <SummonerNameCard /> {/* SummonerNameCard Component */}
+      <SummonerNameCard name={props.name} profileiconid={props.profileiconid}/> {/* SummonerNameCard Component */}
       <SummonerRankCard /> {/* SummonerRankCard Component*/}
     </Grid> 
   )

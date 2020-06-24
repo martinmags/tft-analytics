@@ -55,6 +55,7 @@ function Search() {
   return (
     <div>
       <Grid item xs={12}>
+        {/* TODO: Instead redirect to a 404 resource not found page if summoner isnt found */}
         {errors.summonername && <Alert severity="error">Summoner Name is required.</Alert>}
         {alert && <Alert position="relative" severity="error">Summoner Doesn't Exist</Alert>}
         {!errors.summonername && !alert && 
