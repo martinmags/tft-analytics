@@ -8,17 +8,18 @@ const useStyles =  makeStyles((theme) =>({
   }
 }));
 
-function SummonerNameCard() {
+function SummonerNameCard(props) {
   const classes = useStyles();
+  const url = `http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${props.profileiconid}.png`
 
   return (
     <Grid item xs={10} sm={3}>
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <Avatar alt="User Avatar" src ="http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/588.png"/>
+            <Avatar alt="User Avatar" src ={url}/>
           }
-          title="BabyGerber"
+          title={props.name}
           subheader="NA"
         />
         <CardContent>

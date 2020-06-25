@@ -1,15 +1,10 @@
-import React from 'react';   
+import React, { useState, useEffect } from 'react';   
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import SummonerInfo from '../components/SummonerInfo';
 import MatchHistoryCard from '../components/MatchHistoryCard';
 import MatchHistoryTabSelector  from '../components/MatchHistoryTabSelector';
-import {
-  useParams
-} from "react-router-dom";
-
-import MatchSummaryCard from '../components/MatchSummaryCard';
-import { useState } from 'react';
+import { useParams } from 'react-router-dom'
 
 const useStyles =  makeStyles((theme) =>({
   root: {
@@ -17,38 +12,39 @@ const useStyles =  makeStyles((theme) =>({
   },
 }));
 
-function SummonerPage(props) {
-  const classes = useStyles();
-  let { summoner, server} = useParams();
-  console.log(summoner, server);
+function SummonerPage() {
+  const { summonername, region } = useParams()
+  let urlSummoner = `http://localhost:8000/api/matchhistory?summoner=${summonername}&server=${region}`
+  const [name, setName] = useState('')
+  const [profileIconId, setProfileIconId] = useState('')
+
+  useEffect(()=>{
+    /* Reset State */
+    setName('')
+    // setUrl('')
+
+    // Fetch for summoner info (SummonerNameCard and SummonerRankCard props)
+    fetch(urlSummoner)
+    .then((response)=> {return response.json()})
+    .then((data)=>{
+      const { name, profileiconid } = data.playerinfo
+      /* Update State */
+      setName(name)
+      setProfileIconId(profileiconid)
+    }).catch(error =>{
+      console.log(error)
+    })
+  }, [urlSummoner])
   
-  const [name, setName] = useState(summoner);
-  const [profileIconId, setIcon] = useState();
-    
-  setTimeout(() => {
-    let url = new URL('http://localhost:8000/api/summonerinfo');
-    url.search = new URLSearchParams([['summoner', summoner], ['server', server]]).toString();
-    console.log(url);
-    
-    const f = fetch(url);
 
-    const p = f.then(r => r.json());
 
-    console.log(p);
+  
 
-    p.then((data) => {
-      console.log(data);
-      setTimeout(() => setName(data.name), 0);
-      console.log(name);
-      setTimeout(() => setIcon(data.profileIconId), 0);
-      console.log(profileIconId);
-    })}, 0
-  );
-
+  const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Grid container direction="column" spacing={3}>
-        <SummonerInfo /> 
+      <Grid container direction="column">
+        <SummonerInfo name={name} profileiconid={profileIconId}/> 
         {/* TODO: Setup <Switch> Routing to render depending on "All"   "Ranked"   "Normal" */}
         <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
         <MatchHistoryCard /> 

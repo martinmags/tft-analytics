@@ -72,19 +72,25 @@ class MatchHistory(Resource):
   }
   """
   def get(self):
+    matchhistory = []
+    playerinfo = {}
     summoner_json = getSummoner()
 
     puuid = summoner_json['puuid']
     region = regions[server]
+    
+    # Store summoner info
+    playerinfo['name']=summoner_json['name']
+    playerinfo['profileiconid']=summoner_json['profileIconId']
 
     matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=5)
-    matchhistory = []
     for matchid in matchlist:
       j = tft.match.by_id(region='americas', match_id=matchid)
 
       idx = j['metadata']['participants'].index(puuid)
       player = j['info']['participants'][idx]
-      
+ 
+
       # Store traits per other player
       traits_list = player['traits']
       trait_counts = []
@@ -105,7 +111,7 @@ class MatchHistory(Resource):
       match_dict['units'] = units_list
       # matchhistory.append(units_list)
       
-    return jsonify(matchhistory=matchhistory)
+    return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
 
 # Endpoints
 api.add_resource(SummonerInfo, '/api', '/api/summonerinfo')
