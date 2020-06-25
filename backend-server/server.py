@@ -113,9 +113,37 @@ class MatchHistory(Resource):
       
     return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
 
+@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+class RankInfo(Resource):
+  """
+  Returns the ranked information on for a summoner
+  {
+    "tier": {string},
+    "divion": {string},
+    "lp": {int},
+    "wins": {int},
+    "losses": {int}
+  }
+  """
+  def get(self):
+    summoner_id = getSummoner()['id']
+    rank_json = tft.league.by_summoner(region=server, encrypted_summoner_id=summoner_id)[0]
+    response_json = {}
+    response_json['tier'] = rank_json['tier']
+    response_json['division'] = rank_json['rank']
+    response_json['lp'] = rank_json['leaguePoints']
+    response_json['wins'] = rank_json['wins']
+    response_json['losses'] = rank_json['losses']
+    return jsonify(response_json)
+
+
+
+
+
 # Endpoints
 api.add_resource(SummonerInfo, '/api', '/api/summonerinfo')
 api.add_resource(MatchHistory, '/api/matchhistory')
+api.add_resource(RankInfo, '/api/rankinfo')
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port=8000)
