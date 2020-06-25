@@ -9,7 +9,7 @@ const useStyles =  makeStyles((theme) =>({
   }
 }));
 
-function SummonerRankCard() {
+function SummonerRankCard(props) {
   const classes = useStyles();
   return (
     <Grid item xs={10} sm={3}>
@@ -18,8 +18,8 @@ function SummonerRankCard() {
           avatar={
             <Avatar alt="Rank Gold" src={RankGold}/>
           }
-          title="Gold"
-          subheader="50 LP"
+          title={props.tier + " " + props.division}
+          subheader={props.lp}
         />
         <CardContent>
           <LinearProgress variant="determinate" value={50}  />

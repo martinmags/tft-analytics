@@ -4,6 +4,7 @@ import SummonerNameCard from '../components/SummonerNameCard';
 import SummonerRankCard from '../components/SummonerRankCard';
 
 function SummonerInfo(props) {
+  
   return (
     <Grid
       container
@@ -13,7 +14,8 @@ function SummonerInfo(props) {
       xs={12}
     >
       <SummonerNameCard name={props.name} profileiconid={props.profileiconid}/> {/* SummonerNameCard Component */}
-      <SummonerRankCard /> {/* SummonerRankCard Component*/}
+      <SummonerRankCard tier={props.tier} division={props.division} lp={props.lp}/> {/* SummonerRankCard Component*/}
+      
     </Grid> 
   )
 }

@@ -14,9 +14,16 @@ const useStyles =  makeStyles((theme) =>({
 
 function SummonerPage() {
   const { summonername, region } = useParams()
-  let urlSummoner = `http://localhost:8000/api/matchhistory?summoner=${summonername}&server=${region}`
+  const root = `http://localhost:8000/api`;
+  const query = `?summoner=${ summonername }&server=${ region }`;
+  let urlSummoner = root + "/matchhistory" + query;
   const [name, setName] = useState('')
   const [profileIconId, setProfileIconId] = useState('')
+  
+  let rankUrl = root + "/rankinfo" + query;
+  const [tier, setTier] = useState('');
+  const [division, setDiv] = useState('');
+  const [lp, setLP] = useState(0);
 
   useEffect(()=>{
     /* Reset State */
@@ -36,6 +43,25 @@ function SummonerPage() {
     })
   }, [urlSummoner])
   
+  useEffect(() => {
+    /* Reset State */
+    setName('')
+    // setUrl('')
+
+    // Fetch for summoner info (SummonerNameCard and SummonerRankCard props)
+    fetch(rankUrl)
+      .then((response) => { return response.json() })
+      .then((data) => {
+        console.log(data)
+        const { tier, division, lp } = data
+        /* Update State */
+        setTier(tier)
+        setDiv(division)
+        setLP(lp)
+      }).catch(error => {
+        console.log(error)
+      })
+  }, [rankUrl])
 
 
   
@@ -44,7 +70,7 @@ function SummonerPage() {
   return (
     <div className={classes.root}>
       <Grid container direction="column">
-        <SummonerInfo name={name} profileiconid={profileIconId}/> 
+        <SummonerInfo name={name} profileiconid={profileIconId} tier={tier} division={division} lp={lp}/> 
         {/* TODO: Setup <Switch> Routing to render depending on "All"   "Ranked"   "Normal" */}
         <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
         <MatchHistoryCard /> 
