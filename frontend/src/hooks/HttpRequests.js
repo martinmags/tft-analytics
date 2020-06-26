@@ -8,16 +8,14 @@ function useFetch(url) {
   })            
   
   /* Gets called whenever [summonerInfo] is updated */
-  useEffect(()=>{
-    console.log(url)
-    
+  useEffect(()=>{    
     /* Reset */
     setRequest({
       data: null,
       error: null,
       loading: true
     })
-
+    
     fetch(url)
       .then(response => {return response.json()})
       .then(data => {

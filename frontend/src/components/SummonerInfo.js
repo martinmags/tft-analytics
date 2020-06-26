@@ -1,7 +1,8 @@
 import React from 'react'
-import {  Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import SummonerNameCard from '../components/SummonerNameCard';
 import SummonerRankCard from '../components/SummonerRankCard';
+import UnrankedCard from '../components/UnrankedCard';
 
 function SummonerInfo(props) {
   return (
@@ -12,9 +13,13 @@ function SummonerInfo(props) {
       justify="space-evenly"
       xs={12}
     >
-      <SummonerNameCard name={props.name} profileiconid={props.profileiconid} wins={props.wins} losses={props.losses}/> {/* SummonerNameCard Component */}
-      <SummonerRankCard tier={props.tier} division={props.division} lp={props.lp}/> {/* SummonerRankCard Component*/}
-      
+      {/* SummonerNameCard Component */}
+      <SummonerNameCard name={props.name} profileiconid={props.profileiconid} wins={props.wins} losses={props.losses}/> 
+      {/* SummonerRankCard Component*/}
+      { props.tier !== 'unranked' ? 
+          <SummonerRankCard tier={props.tier} division={props.division} lp={props.lp}/> :
+          <UnrankedCard />
+      }
     </Grid> 
   )
 }

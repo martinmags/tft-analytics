@@ -13,7 +13,7 @@ function SummonerNameCard(props) {
   const url = `http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${props.profileiconid}.png`
 
   return (
-    <Grid item xs={10} sm={3}>
+    <Grid item xs={10} sm={5}>
       <Card className={classes.root}>
         <CardHeader
           avatar={
