@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 
 function ChampionList(props) {
   
-  console.log("IN ChampionList component: ", props.units)
+  // console.log("IN ChampionList component: ", props.units)
   
   return (
     <Grid container direction="row">
