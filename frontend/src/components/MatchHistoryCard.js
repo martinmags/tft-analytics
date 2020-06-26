@@ -21,7 +21,7 @@ const useStyles =  makeStyles((theme) =>({
   }
 }));
 
-function MatchHistory() {
+function MatchHistory(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -39,7 +39,7 @@ function MatchHistory() {
           />
           <CardContent>
             <Synergy />       {/* Synergy Component */}
-            <ChampionList /> {/* ChampionList Component */}
+            <ChampionList units={props.units} /> {/* ChampionList Component */}
           </CardContent>
           <CardActions>
             <IconButton 

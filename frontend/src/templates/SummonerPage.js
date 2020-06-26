@@ -19,6 +19,7 @@ function SummonerPage() {
   let urlSummoner = root + "/matchhistory" + query;
   const [name, setName] = useState('')
   const [profileIconId, setProfileIconId] = useState('')
+  const [units, setUnits] = useState(null);
   
   let rankUrl = root + "/rankinfo" + query;
   const [tier, setTier] = useState('');
@@ -38,6 +39,14 @@ function SummonerPage() {
       /* Update State */
       setName(name)
       setProfileIconId(profileiconid)
+      
+      //Set units array
+      const {units} = data.matchhistory[0]
+      
+      setUnits(units)
+      console.log(units)
+      
+      
     }).catch(error =>{
       console.log(error)
     })
@@ -73,7 +82,9 @@ function SummonerPage() {
         <SummonerInfo name={name} profileiconid={profileIconId} tier={tier} division={division} lp={lp}/> 
         {/* TODO: Setup <Switch> Routing to render depending on "All"   "Ranked"   "Normal" */}
         <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
-        <MatchHistoryCard /> 
+        
+        {console.log("IN SUMMONER PAGE: ", units)}
+        <MatchHistoryCard units={units} /> 
         <MatchHistoryCard /> 
         <MatchHistoryCard /> 
       </Grid>

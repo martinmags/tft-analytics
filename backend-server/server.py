@@ -83,7 +83,7 @@ class MatchHistory(Resource):
     playerinfo['name']=summoner_json['name']
     playerinfo['profileiconid']=summoner_json['profileIconId']
 
-    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=5)
+    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=1)
     for matchid in matchlist:
       j = tft.match.by_id(region='americas', match_id=matchid)
 
@@ -106,7 +106,7 @@ class MatchHistory(Resource):
       
       units_list = player['units']
       for units_json in units_list:
-        units_json['character_id'] = units_json['character_id'].replace('TFT3_', '')
+        units_json['character_id'] = units_json['character_id'].replace('TFT3_', '').lower()
       
       match_dict['units'] = units_list
       # matchhistory.append(units_list)
