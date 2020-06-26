@@ -10,10 +10,11 @@ function Synergy(props) {
     <Grid container direction="row">
       
       {props.traits ? props.traits.map((trait, i) => 
-      <Grid item>
-        <Avatar variant="circle" 
-            src={`http://d2tjld7v9ietdh.cloudfront.net/traits/${trait.style}/${trait.name}.png`} /> 
-      </Grid>) : null}
+        <Grid item key={i}>
+          <Avatar variant="circle" 
+              src={`http://d2tjld7v9ietdh.cloudfront.net/traits/${trait.style}/${trait.name}.png`} /> 
+        </Grid>) : null
+      }
       
       
       {/* <Grid item>

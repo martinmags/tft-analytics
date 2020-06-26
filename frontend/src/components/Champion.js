@@ -33,7 +33,7 @@ function Champion(props) {
         {/* use this later on
         src={`http://d2tjld7v9ietdh.cloudfront.net/champs/${props.champ}.png`} */}
         
-      <Avatar className={classes.cardchampionicon}
+      <Avatar className={classes.cardchampionicon} title={props.champ}
       src={`https://elasticbeanstalk-us-west-1-808664583376.s3-us-west-1.amazonaws.com/tft/champs/${props.champ}.png`} />
       
         <Grid container direction="row">
