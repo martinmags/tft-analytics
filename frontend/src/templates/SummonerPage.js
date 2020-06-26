@@ -55,7 +55,7 @@ function SummonerPage() {
     content = (
       <Grid item>
         <SummonerInfo name={name} profileiconid={profileiconid} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
-       { matchhistory.map((match,idx) => <MatchHistoryCard key={idx} units={match.units} />) } 
+       { matchhistory.map((match,idx) => <MatchHistoryCard key={idx} units={match.units} traits={match.traits}/>) } 
       </Grid> 
     )
   }

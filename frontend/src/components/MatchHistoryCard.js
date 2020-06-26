@@ -38,7 +38,7 @@ function MatchHistory(props) {
             subheader="Normal" 
           />
           <CardContent>
-            <Synergy />       {/* Synergy Component */}
+            <Synergy traits={props.traits}/>       {/* Synergy Component */}
             <ChampionList units={props.units} /> {/* ChampionList Component */}
           </CardContent>
           <CardActions>

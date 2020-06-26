@@ -84,6 +84,10 @@ class MatchHistory(Resource):
     playerinfo['profileiconid']=summoner_json['profileIconId']
 
     matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=1)
+    
+    if not matchlist:
+      return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
+    
     for matchid in matchlist:
       j = tft.match.by_id(region='americas', match_id=matchid)
 
@@ -93,14 +97,19 @@ class MatchHistory(Resource):
 
       # Store traits per other player
       traits_list = player['traits']
-      trait_counts = []
+      # trait_counts = []
+      traits = []
       for trait_json in traits_list:
-        string = str(trait_json['tier_current']) + " " + trait_json['name']
-        trait_counts.append(string)
+        # string = str(trait_json['tier_current']) + " " + trait_json['name']
+        if trait_json['style'] != 0:
+          trait_json['name'] = trait_json['name'].replace('Set3_', '').lower()
+          traits.append(trait_json)
+        # trait_counts.append(string)
       
       # Creates an object for other players in the same match 
       match_dict = {}
-      match_dict['comp'] = '   '.join(trait_counts)
+      # match_dict['comp'] = '   '.join(trait_counts)
+      match_dict['traits'] = traits
       match_dict['position'] = player['placement']
       matchhistory.append(match_dict)
       
@@ -126,9 +135,15 @@ class RankInfo(Resource):
   }
   """
   def get(self):
-    summoner_id = getSummoner()['id']
-    rank_json = tft.league.by_summoner(region=server, encrypted_summoner_id=summoner_id)[0]
     response_json = {}
+    summoner_id = getSummoner()['id']
+    rank_json = tft.league.by_summoner(region=server, encrypted_summoner_id=summoner_id)
+    
+    if rank_json:
+      rank_json = rank_json[0]
+    else:
+      return jsonify(response_json)
+      
     response_json['tier'] = rank_json['tier']
     response_json['division'] = rank_json['rank']
     response_json['lp'] = rank_json['leaguePoints']
