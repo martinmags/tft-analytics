@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';   
+import React from 'react';   
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import SummonerInfo from '../components/SummonerInfo';
 import MatchHistoryCard from '../components/MatchHistoryCard';
-import MatchHistoryTabSelector  from '../components/MatchHistoryTabSelector';
-import { useParams } from 'react-router-dom'
+import useFetch from '../hooks/HttpRequests';
+import { useParams } from 'react-router-dom';
+
 
 const useStyles =  makeStyles((theme) =>({
   root: {
@@ -13,80 +14,65 @@ const useStyles =  makeStyles((theme) =>({
 }));
 
 function SummonerPage() {
-  const { summonername, region } = useParams()
-  const root = `http://localhost:8000/api`;
-  const query = `?summoner=${ summonername }&server=${ region }`;
-  let urlSummoner = root + "/matchhistory" + query;
-  const [name, setName] = useState('')
-  const [profileIconId, setProfileIconId] = useState('')
-  const [units, setUnits] = useState(null);
-  
-  let rankUrl = root + "/rankinfo" + query;
-  const [tier, setTier] = useState('');
-  const [division, setDiv] = useState('');
-  const [lp, setLP] = useState(0);
-
-  useEffect(()=>{
-    /* Reset State */
-    setName('')
-    // setUrl('')
-
-    // Fetch for summoner info (SummonerNameCard and SummonerRankCard props)
-    fetch(urlSummoner)
-    .then((response)=> {return response.json()})
-    .then((data)=>{
-      const { name, profileiconid } = data.playerinfo
-      /* Update State */
-      setName(name)
-      setProfileIconId(profileiconid)
-      
-      //Set units array
-      const {units} = data.matchhistory[0]
-      
-      setUnits(units)
-      console.log(units)
-      
-      
-    }).catch(error =>{
-      console.log(error)
-    })
-  }, [urlSummoner])
-  
-  useEffect(() => {
-    /* Reset State */
-    setName('')
-    // setUrl('')
-
-    // Fetch for summoner info (SummonerNameCard and SummonerRankCard props)
-    fetch(rankUrl)
-      .then((response) => { return response.json() })
-      .then((data) => {
-        console.log(data)
-        const { tier, division, lp } = data
-        /* Update State */
-        setTier(tier)
-        setDiv(division)
-        setLP(lp)
-      }).catch(error => {
-        console.log(error)
-      })
-  }, [rankUrl])
-
-
-  
-
   const classes = useStyles();
+  const { summonername, region } = useParams()
+  const root =`http://localhost:8000/api`;
+  const query = `?summoner=${summonername}&server=${region}`;
+
+  /* summonerStats Fetch (includes name, profileicon, and matchhistory */
+  let urlSummoner = root + "/matchhistory" + query;
+  let summonerStats =  useFetch(urlSummoner)
+  
+  /* rankStats Fetch */
+  let urlRank = root + "/rankinfo" + query;
+  let rankStats = useFetch(urlRank)
+
+  /* Determine what to display */
+  let content = null
+
+  // State 0: Loading 
+  if (summonerStats.loading){
+    content = (
+      <Grid item>
+        <CircularProgress />
+      </Grid>
+    )
+  } 
+
+  // State 1: Successful Fetch => Display matches 
+  if (summonerStats.data){
+    const { name, profileiconid } = summonerStats.data.playerinfo
+    const matchhistory  = summonerStats.data.matchhistory
+    
+    const { division=null, losses=null, lp=null, tier=null, wins=null } = rankStats.data
+    console.log("PLAYERINFO:")
+    console.log(summonerStats.data.playerinfo)
+    console.log("MATCHHISTORY:")
+    console.log(matchhistory[0].units)
+    console.log("RANKSTATS:")
+    console.log(rankStats.data)
+    
+    content = (
+      <Grid item>
+        <SummonerInfo name={name} profileiconid={profileiconid} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
+       { matchhistory.map((match,idx) => <MatchHistoryCard key={idx} units={match.units} />) } 
+      </Grid> 
+    )
+  }
+
+  // State 2: Resource Not Found => Display error
+  if (summonerStats.error){
+    content = (
+      <Grid item>
+        <h1>Not found</h1>
+      </Grid>
+    )
+  }
+
   return (
     <div className={classes.root}>
-      <Grid container direction="column">
-        <SummonerInfo name={name} profileiconid={profileIconId} tier={tier} division={division} lp={lp}/> 
-        {/* TODO: Setup <Switch> Routing to render depending on "All"   "Ranked"   "Normal" */}
-        <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
-        
-        {console.log("IN SUMMONER PAGE: ", units)}
-        <MatchHistoryCard units={units} /> 
-        <MatchHistoryCard /> 
-        <MatchHistoryCard /> 
+      <Grid container direction="column" justify="center" alignItems="center">
+        {content}
       </Grid>
     </div>
   );
