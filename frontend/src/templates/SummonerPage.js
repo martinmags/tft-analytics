@@ -20,6 +20,7 @@ function SummonerPage() {
   const [name, setName] = useState('')
   const [profileIconId, setProfileIconId] = useState('')
   const [units, setUnits] = useState(null);
+  const [traits, setTraits] = useState(null);
   
   let rankUrl = root + "/rankinfo" + query;
   const [tier, setTier] = useState('');
@@ -41,10 +42,13 @@ function SummonerPage() {
       setProfileIconId(profileiconid)
       
       //Set units array
-      const {units} = data.matchhistory[0]
+      const {units, traits} = data.matchhistory[0]
       
       setUnits(units)
       console.log(units)
+      
+      setTraits(traits)
+      console.log(traits)
       
       
     }).catch(error =>{
@@ -84,7 +88,7 @@ function SummonerPage() {
         <MatchHistoryTabSelector /> {/* TODO: Need to refactor */}
         
         {console.log("IN SUMMONER PAGE: ", units)}
-        <MatchHistoryCard units={units} /> 
+        <MatchHistoryCard units={units} traits={traits}/> 
         <MatchHistoryCard /> 
         <MatchHistoryCard /> 
       </Grid>

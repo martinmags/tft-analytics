@@ -93,14 +93,19 @@ class MatchHistory(Resource):
 
       # Store traits per other player
       traits_list = player['traits']
-      trait_counts = []
+      # trait_counts = []
+      traits = []
       for trait_json in traits_list:
-        string = str(trait_json['tier_current']) + " " + trait_json['name']
-        trait_counts.append(string)
+        # string = str(trait_json['tier_current']) + " " + trait_json['name']
+        if trait_json['style'] != 0:
+          trait_json['name'] = trait_json['name'].replace('Set3_', '').lower()
+          traits.append(trait_json)
+        # trait_counts.append(string)
       
       # Creates an object for other players in the same match 
       match_dict = {}
-      match_dict['comp'] = '   '.join(trait_counts)
+      # match_dict['comp'] = '   '.join(trait_counts)
+      match_dict['traits'] = traits
       match_dict['position'] = player['placement']
       matchhistory.append(match_dict)
       
