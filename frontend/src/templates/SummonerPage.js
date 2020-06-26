@@ -16,10 +16,10 @@ const useStyles =  makeStyles((theme) =>({
 function SummonerPage() {
   const classes = useStyles();
   const { summonername, region } = useParams()
-
-  /* summonerStats Fetch (includes name, profileicon, and matchhistory */
   const root =`http://localhost:8000/api`;
   const query = `?summoner=${summonername}&server=${region}`;
+
+  /* summonerStats Fetch (includes name, profileicon, and matchhistory */
   let urlSummoner = root + "/matchhistory" + query;
   let summonerStats =  useFetch(urlSummoner)
   
@@ -30,7 +30,7 @@ function SummonerPage() {
   /* Determine what to display */
   let content = null
 
-  // Loading 
+  // State 0: Loading 
   if (summonerStats.loading){
     content = (
       <Grid item>
@@ -39,27 +39,33 @@ function SummonerPage() {
     )
   } 
 
-  // Successful Fetch; Display matches 
+  // State 1: Successful Fetch => Display matches 
   if (summonerStats.data){
     const { name, profileiconid } = summonerStats.data.playerinfo
     const matchhistory  = summonerStats.data.matchhistory
     
     const { division=null, losses=null, lp=null, tier=null, wins=null } = rankStats.data
-
+    console.log("PLAYERINFO:")
     console.log(summonerStats.data.playerinfo)
-    console.log(matchhistory)
+    console.log("MATCHHISTORY:")
+    console.log(matchhistory[0].units)
+    console.log("RANKSTATS:")
     console.log(rankStats.data)
     
     content = (
-      <SummonerInfo name={name} profileiconid={profileiconid} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
-      // <MatchHistoryCard />
+      <Grid item>
+        <SummonerInfo name={name} profileiconid={profileiconid} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
+       { matchhistory.map((match,idx) => <MatchHistoryCard key={idx} units={match.units} />) } 
+      </Grid> 
     )
   }
 
-  // Not Found 
+  // State 2: Resource Not Found => Display error
   if (summonerStats.error){
     content = (
-      <h1>Not found</h1>
+      <Grid item>
+        <h1>Not found</h1>
+      </Grid>
     )
   }
 
