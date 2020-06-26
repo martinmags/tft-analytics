@@ -12,16 +12,17 @@ import SummonerPage from './templates/SummonerPage'
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 function App() {
+
   return (
     <div className="App">
       <CssBaseline/>
       <ThemeProvider theme={theme}>
       <Router>
-        <Header/>
-        <Switch>
-          <Route exact path="/"> <HomePage/> </Route>
-          <Route exact path="/summonerstats/:summonername/:region"> <SummonerPage/> </Route>
-        </Switch>
+          <Header/>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/summonerstats/:region/:summonername" component={SummonerPage} />
+          </Switch>
       </Router>
       </ThemeProvider>
     </div>
