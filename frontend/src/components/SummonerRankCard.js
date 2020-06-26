@@ -5,7 +5,7 @@ import RankGold from '../assets/ranks/Emblem_Gold.png';
 
 const useStyles =  makeStyles((theme) =>({
   root: {
-    height: 125
+    height: 130
   }
 }));
 
@@ -19,7 +19,7 @@ function SummonerRankCard(props) {
             <Avatar alt="Rank Gold" src={RankGold}/>
           }
           title={props.tier + " " + props.division}
-          subheader={props.lp}
+          subheader={props.lp + " LP"}
         />
         <CardContent>
           <LinearProgress variant="determinate" value={50}  />

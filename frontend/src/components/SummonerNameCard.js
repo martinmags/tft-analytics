@@ -4,7 +4,7 @@ import { Grid, Card, CardContent, CardHeader, Typography, Avatar } from '@materi
 
 const useStyles =  makeStyles((theme) =>({
   root: {
-    height: 125
+    height: 130
   }
 }));
 
@@ -20,10 +20,10 @@ function SummonerNameCard(props) {
             <Avatar alt="User Avatar" src ={url}/>
           }
           title={props.name}
-          subheader="NA"
+          
         />
         <CardContent>
-          <Typography>Extra summoner info here</Typography>
+          <Typography>Wins: {props.wins} Losses: {props.losses}</Typography>
         </CardContent>
       </Card>
     </Grid>
