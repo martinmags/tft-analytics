@@ -11,7 +11,6 @@ const useStyles =  makeStyles((theme) =>({
 function SummonerNameCard(props) {
   const classes = useStyles();
   const url = `http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${props.profileiconid}.png`
-
   return (
     <Grid item xs={10} sm={5}>
       <Card className={classes.root}>
@@ -20,10 +19,10 @@ function SummonerNameCard(props) {
             <Avatar alt="User Avatar" src ={url}/>
           }
           title={props.name}
-          
+          subheader={`Lvl ${props.summonerlevel}`}
         />
         <CardContent>
-          <Typography>Wins: {props.wins} Losses: {props.losses}</Typography>
+          <Typography>(Extra Summoner Info)</Typography>
         </CardContent>
       </Card>
     </Grid>

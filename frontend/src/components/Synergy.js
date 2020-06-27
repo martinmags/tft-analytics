@@ -1,43 +1,25 @@
 import React from 'react'
-import { Grid, Avatar } from '@material-ui/core';
-import Cybernetic from '../assets/icons/traits/Cybernetic.png';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Avatar, Typography } from '@material-ui/core';
 
-function Synergy(props) {
-  
-  console.log("IN SYNERGY: ", props.traits)
-  
+const useStyles =  makeStyles((theme) =>({
+  text:{
+    textAlign:'center'
+  }
+}));
+
+function Synergy(props) {  
+  const classes = useStyles();
+
   return (
     <Grid container direction="row">
-      
       {props.traits ? props.traits.map((trait, i) => 
         <Grid item key={i}>
-          <Avatar variant="circle" 
+          <Typography className={classes.text}>{trait.tier_current}/{trait.tier_total}</Typography>
+          <Avatar variant="circle" title={trait.name}
               src={`http://d2tjld7v9ietdh.cloudfront.net/traits/${trait.style}/${trait.name}.png`} /> 
         </Grid>) : null
       }
-      
-      
-      {/* <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid>
-      <Grid item>
-        <Avatar variant="circle" src={Cybernetic}></Avatar>
-      </Grid> */}
     </Grid>
   )
 }

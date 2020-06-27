@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Card, CardContent, CardHeader, Avatar, LinearProgress } from '@material-ui/core';
+import { Grid, Card, CardContent, CardHeader, Avatar, LinearProgress, Typography } from '@material-ui/core';
 import RankGold from '../assets/ranks/Emblem_Gold.png';
 
 const useStyles =  makeStyles((theme) =>({
@@ -19,10 +19,15 @@ function SummonerRankCard(props) {
             <Avatar alt="Rank Gold" src={RankGold}/>
           }
           title={props.tier + " " + props.division}
-          subheader={props.lp + " LP"}
+          subheader={
+            <div>
+            <Typography>{props.lp} LP</Typography>
+            <LinearProgress variant="determinate" value={props.lp}  />
+            </div>
+          }
         />
         <CardContent>
-          <LinearProgress variant="determinate" value={50}  />
+          <Typography>Wins: {props.wins} Losses: {props.losses}</Typography>
         </CardContent>
       </Card>
     </Grid>

@@ -21,7 +21,6 @@ const useStyles =  makeStyles((theme) =>({
 
 function Champion(props) {
   const classes = useStyles();
-
   return (
       <Box className={classes.cardchampion}>
         <Grid container direction="row">
@@ -29,9 +28,6 @@ function Champion(props) {
           <Grid item><StarIcon className={classes.cardicon}/></Grid>
           <Grid item><StarIcon className={classes.cardicon}/></Grid>
         </Grid>
-        
-        {/* use this later on
-        src={`http://d2tjld7v9ietdh.cloudfront.net/champs/${props.champ}.png`} */}
         
       <Avatar className={classes.cardchampionicon} title={props.champ}
       src={`https://elasticbeanstalk-us-west-1-808664583376.s3-us-west-1.amazonaws.com/tft/champs/${props.champ}.png`} />

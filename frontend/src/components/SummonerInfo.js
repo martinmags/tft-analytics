@@ -14,10 +14,10 @@ function SummonerInfo(props) {
       xs={12}
     >
       {/* SummonerNameCard Component */}
-      <SummonerNameCard name={props.name} profileiconid={props.profileiconid} wins={props.wins} losses={props.losses}/> 
+      <SummonerNameCard name={props.name} profileiconid={props.profileiconid} summonerlevel={props.summonerlevel} /> 
       {/* SummonerRankCard Component*/}
-      { props.tier !== 'unranked' ? 
-          <SummonerRankCard tier={props.tier} division={props.division} lp={props.lp}/> :
+      { typeof(props.tier) !== 'undefined' ? 
+          <SummonerRankCard tier={props.tier} division={props.division} lp={props.lp} wins={props.wins} losses={props.losses}/> :
           <UnrankedCard />
       }
     </Grid> 

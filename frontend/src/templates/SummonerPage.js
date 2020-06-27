@@ -11,11 +11,11 @@ const useStyles =  makeStyles((theme) =>({
   root: {
     paddingTop: 8*3
   },
-  text:{
+  center:{
     display: 'flex',
     justifyContent: 'center',
     paddingTop: 8*3
-  }
+  },
 }));
 
 function SummonerPage() {
@@ -30,7 +30,6 @@ function SummonerPage() {
   
   /* rankStats Fetch */
   let urlRank = root + "/rankinfo" + query;
-  
   let rankStats = useFetch(urlRank)
 
   /* Determine what to display */
@@ -39,7 +38,7 @@ function SummonerPage() {
   // State 0: Loading 
   if (summonerStats.loading){
     content = (
-      <Grid item>
+      <Grid item className={classes.center}>
         <CircularProgress />
       </Grid>
     )
@@ -47,9 +46,8 @@ function SummonerPage() {
 
   // State 1: Successful Fetch => Display matches 
   if (summonerStats.data){
-    const { name, profileiconid } = summonerStats.data.playerinfo
+    const { name, profileiconid, summonerlevel } = summonerStats.data.playerinfo
     const matchhistory  = summonerStats.data.matchhistory
-    console.log(matchhistory[0])
     
     let division = ''
     let losses = 0 
@@ -65,13 +63,12 @@ function SummonerPage() {
     }catch(error){
       console.log(error)
     }
-    
     content = (
       <Grid item xs={12}>
-        <SummonerInfo name={name} profileiconid={profileiconid} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
-        { matchhistory ? matchhistory.map((match,idx) => 
+        <SummonerInfo name={name} profileiconid={profileiconid} summonerlevel={summonerlevel} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
+        { matchhistory.length > 0 ? matchhistory.map((match,idx) => 
             <MatchHistoryCard key={idx} units={match.units} traits={match.traits}/>) : 
-            <Typography className={classes.text}>No Matches Found</Typography>
+            <Typography className={classes.center}>No Matches Found</Typography>
         } 
       </Grid> 
     )
