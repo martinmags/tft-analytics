@@ -25,7 +25,7 @@ function Champion(props) {
       <Box className={classes.cardchampion}>
         <Grid container direction="row">
           
-        {[...Array(props.stars)].map((e, idx) => <Grid item><StarIcon key={idx} className={classes.cardicon} /></Grid>)} 
+        {[...Array(props.stars)].map((e, idx) => <Grid item key={idx}><StarIcon key={idx} className={classes.cardicon} /></Grid>)} 
           
           {/* <Grid item><StarIcon className={classes.cardicon}/></Grid>
           <Grid item><StarIcon className={classes.cardicon}/></Grid>
