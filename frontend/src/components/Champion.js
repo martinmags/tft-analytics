@@ -30,28 +30,31 @@ function Champion(props) {
   
   return (
       <Box className={classes.cardchampion}>
-        
         {/* CHAMPION STARS */}
         <Grid container direction="row">
-        {[...Array(props.stars)].map((e, idx) => <Grid item><StarIcon style={{ color: dic[props.stars]}} key={idx} className={classes.cardicon} /></Grid>)} 
+          {[...Array(props.stars)].map((e, idx) => 
+            <Grid item>
+              <StarIcon style={{ color: dic[props.stars]}} key={idx} className={classes.cardicon} />
+            </Grid>)
+          } 
         </Grid>
         
-      <Avatar className={classes.cardchampionicon} title={props.champ}
-        src={`http://d2tjld7v9ietdh.cloudfront.net/champs/${props.champ}.png`} />
+        <Avatar className={classes.cardchampionicon} title={props.champ}
+          src={`http://d2tjld7v9ietdh.cloudfront.net/champs/${props.champ}.png`} />
       
         {/* CHAMPION ITEMS GRID */}
         <Grid container direction="row">
-          
-        { props.items.map((item, idx) =>
-          <Grid item> 
-            <Avatar
-              key={idx}
-              className={classes.cardicon}              
-              src={`http://d2tjld7v9ietdh.cloudfront.net/items/${
-                item > 9 ? "" + item : "0" + item}.png`} 
-            />
-          </Grid>         
-        )}
+          { props.items.map((item, idx) =>
+            <Grid item> 
+              <Avatar
+                key={idx}
+                title={item}
+                className={classes.cardicon}              
+                src={`http://d2tjld7v9ietdh.cloudfront.net/items/${
+                  item > 9 ? "" + item : "0" + item}.png`} 
+              />
+            </Grid>         
+          )}
         </Grid>
       </Box> 
   )

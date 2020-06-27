@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Card, CardContent, CardHeader, CardActions, IconButton } from '@material-ui/core';
+import { Grid, Card, CardContent, CardHeader, CardActions, IconButton, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChampionList from '../components/ChampionList';
 import Synergy from '../components/Synergy';
@@ -28,24 +28,26 @@ function MatchHistory(props) {
     alert(`${expanded} -> ${!expanded}`)
     setExpanded(!expanded);
   }
-  let position = ''
-  if (props.position === 1){
-    position = '1st'
-  }else if (props.position === 2){
-    position = '2nd'
-  }else if (props.position === 3){
-    position = '3rd'
-  }else{
-    position = `${props.position}th`
-  }
 
+  let matchType = ''
+  if (props.queue === 1090){
+    matchType="Normal"
+  }else if (props.queue === 1100){
+    matchType="Ranked"
+  }
+  
   return (
     <Grid container item justify="center">
       <Grid item xs={11}>
         <Card className={classes.color1}>
           <CardHeader 
-            title={position} 
-            subheader="Normal" 
+            title={`#${props.position}`} 
+            subheader={
+              <div>
+                <Typography>{matchType}</Typography>
+                <Typography>Lvl {props.level}</Typography>
+              </div>
+            }
           />
           <CardContent>
             <Synergy traits={props.traits}/>       {/* Synergy Component */}

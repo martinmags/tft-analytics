@@ -84,7 +84,7 @@ class MatchHistory(Resource):
     playerinfo['profileiconid']=summoner_json['profileIconId']
     playerinfo['summonerlevel']=summoner_json['summonerLevel']
 
-    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=1)
+    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=20)
     
     if not matchlist:
       return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
@@ -98,7 +98,6 @@ class MatchHistory(Resource):
       #only remove 999 (disabled item slot) from items list if its the binary galaxy mode
       bin_galxy = j['info']['game_variation'] == 'TFT3_GameVariation_TwoItemMax'
  
-
       # Store traits per other player
       traits_list = player['traits']
       traits = []
@@ -111,6 +110,7 @@ class MatchHistory(Resource):
       match_dict = {}
       match_dict['traits'] = traits
       match_dict['position'] = player['placement']
+      match_dict['level'] = player['level']
       matchhistory.append(match_dict)
       
       units_list = player['units']

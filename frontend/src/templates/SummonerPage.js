@@ -67,7 +67,7 @@ function SummonerPage() {
       <Grid item xs={12}>
         <SummonerInfo name={name} profileiconid={profileiconid} summonerlevel={summonerlevel} tier={tier} division={division} lp={lp} wins={wins} losses={losses} />
         { matchhistory.length > 0 ? matchhistory.map((match,idx) => 
-            <MatchHistoryCard key={idx} units={match.units} traits={match.traits} position={match.position}/>) : 
+            <MatchHistoryCard key={idx} units={match.units} traits={match.traits} position={match.position} level={match.level} queue={match.queue}/>) : 
             <Typography className={classes.center}>No Matches Found</Typography>
         } 
       </Grid> 
