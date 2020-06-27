@@ -24,17 +24,27 @@ const useStyles =  makeStyles((theme) =>({
 function MatchHistory(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-
   const handleExpandClick = () => {
     alert(`${expanded} -> ${!expanded}`)
     setExpanded(!expanded);
   }
+  let position = ''
+  if (props.position === 1){
+    position = '1st'
+  }else if (props.position === 2){
+    position = '2nd'
+  }else if (props.position === 3){
+    position = '3rd'
+  }else{
+    position = `${props.position}th`
+  }
+
   return (
     <Grid container item justify="center">
       <Grid item xs={11}>
         <Card className={classes.color1}>
           <CardHeader 
-            title="1st" 
+            title={position} 
             subheader="Normal" 
           />
           <CardContent>
