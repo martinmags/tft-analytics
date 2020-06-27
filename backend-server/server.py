@@ -82,6 +82,7 @@ class MatchHistory(Resource):
     # Store summoner info
     playerinfo['name']=summoner_json['name']
     playerinfo['profileiconid']=summoner_json['profileIconId']
+    playerinfo['summonerlevel']=summoner_json['summonerLevel']
 
     matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=1)
     
