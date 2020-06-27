@@ -84,7 +84,7 @@ class MatchHistory(Resource):
     playerinfo['profileiconid']=summoner_json['profileIconId']
     playerinfo['summonerlevel']=summoner_json['summonerLevel']
 
-    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=1)
+    matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=20)
     
     if not matchlist:
       return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
@@ -94,21 +94,20 @@ class MatchHistory(Resource):
 
       idx = j['metadata']['participants'].index(puuid)
       player = j['info']['participants'][idx]
-
+      
+      #only remove 999 (disabled item slot) from items list if its the binary galaxy mode
+      bin_galxy = j['info']['game_variation'] == 'TFT3_GameVariation_TwoItemMax'
+ 
       # Store traits per other player
       traits_list = player['traits']
-      # trait_counts = []
       traits = []
       for trait_json in traits_list:
-        # string = str(trait_json['tier_current']) + " " + trait_json['name']
         if trait_json['style'] != 0:
           trait_json['name'] = trait_json['name'].replace('Set3_', '').lower()
           traits.append(trait_json)
-        # trait_counts.append(string)
       
       # Creates an object for other players in the same match 
       match_dict = {}
-      # match_dict['comp'] = '   '.join(trait_counts)
       match_dict['traits'] = traits
       match_dict['position'] = player['placement']
       match_dict['level'] = player['level']
@@ -117,8 +116,10 @@ class MatchHistory(Resource):
       units_list = player['units']
       for units_json in units_list:
         units_json['character_id'] = units_json['character_id'].replace('TFT3_', '').lower()
+        if bin_galxy: units_json['items'].remove(999) #delete the disabled item slot added in binary star galaxy
       
       match_dict['units'] = units_list
+      match_dict['queue'] = j['info']['queue_id']
       # matchhistory.append(units_list)
       
     return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)

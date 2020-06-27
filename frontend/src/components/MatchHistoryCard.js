@@ -28,6 +28,13 @@ function MatchHistory(props) {
     alert(`${expanded} -> ${!expanded}`)
     setExpanded(!expanded);
   }
+
+  let matchType = ''
+  if (props.queue === 1090){
+    matchType="Normal"
+  }else if (props.queue === 1100){
+    matchType="Ranked"
+  }
   
   return (
     <Grid container item justify="center">
@@ -37,8 +44,8 @@ function MatchHistory(props) {
             title={`#${props.position}`} 
             subheader={
               <div>
-              <Typography>Normal</Typography>
-              <Typography>Lvl {props.level}</Typography>
+                <Typography>{matchType}</Typography>
+                <Typography>Lvl {props.level}</Typography>
               </div>
             }
           />
