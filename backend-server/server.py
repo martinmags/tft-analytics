@@ -94,7 +94,6 @@ class MatchHistory(Resource):
 
       idx = j['metadata']['participants'].index(puuid)
       player = j['info']['participants'][idx]
- 
 
       # Store traits per other player
       traits_list = player['traits']
@@ -112,6 +111,7 @@ class MatchHistory(Resource):
       # match_dict['comp'] = '   '.join(trait_counts)
       match_dict['traits'] = traits
       match_dict['position'] = player['placement']
+      match_dict['level'] = player['level']
       matchhistory.append(match_dict)
       
       units_list = player['units']
