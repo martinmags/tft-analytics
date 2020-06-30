@@ -13,6 +13,7 @@ function useFetchDependent(url, dependent) {
 
     /* MatchHistory Fetch */
     if (dependent.data && url.includes('/matchhistory')){
+      console.log(dependent.data)
       /* Reset */
       setRequest({
         data: null,

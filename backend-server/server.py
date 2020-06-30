@@ -77,8 +77,12 @@ class MatchHistory(Resource):
       player = j['info']['participants'][idx]
       
       #only remove 999 (disabled item slot) from items list if its the binary galaxy mode
-      bin_galxy = j['info']['game_variation'] == 'TFT3_GameVariation_TwoItemMax'
- 
+      bin_galxy = None
+      try:
+        bin_galxy = j['info']['game_variation'] == 'TFT3_GameVariation_TwoItemMax'
+      except KeyError:
+        print("KeyError: {}".format(KeyError))
+  
       # Store traits per other player
       traits_list = player['traits']
       traits = []
