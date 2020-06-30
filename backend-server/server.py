@@ -28,19 +28,7 @@ regions = {
 
 server, region = 'na1', 'americas'
 
-def getSummoner():
-  """
-  Retrieves summoner json object
-
-  Returns
-  -------
-  Json object that contains identifier information on summoner 
-  """
-  summoner_name = request.args.get('summoner')
-  server = request.args.get('server')
-  return tft.summoner.by_name(server, summoner_name)
-
-@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+@api.doc(paths={})
 class SummonerInfo(Resource):
   """
   Returns identifier information on summoner passed through Query params
@@ -54,10 +42,12 @@ class SummonerInfo(Resource):
     "summonerLevel": {string}
   }
   """
-  def get(self):
-    return getSummoner()
+  def get(self, summoner, server):
+    response = tft.summoner.by_name(server, summoner)
+    print(response)
+    return response
 
-@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+@api.doc(paths={})
 class MatchHistory(Resource):
   """
   Returns the information on the last x matches on a summoner
@@ -71,26 +61,17 @@ class MatchHistory(Resource):
     ]
   }
   """
-  def get(self):
+  def get(self, server, puuid):
     matchhistory = []
-    playerinfo = {}
-    summoner_json = getSummoner()
-
-    puuid = summoner_json['puuid']
     region = regions[server]
-    
-    # Store summoner info
-    playerinfo['name']=summoner_json['name']
-    playerinfo['profileiconid']=summoner_json['profileIconId']
-    playerinfo['summonerlevel']=summoner_json['summonerLevel']
-
+    # Get matchlist
     matchlist = tft.match.by_puuid(region=region, puuid=puuid, count=20)
-    
+
     if not matchlist:
-      return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
+      return jsonify(matchhistory=matchhistory)
     
     for matchid in matchlist:
-      j = tft.match.by_id(region='americas', match_id=matchid)
+      j = tft.match.by_id(region=region, match_id=matchid)
 
       idx = j['metadata']['participants'].index(puuid)
       player = j['info']['participants'][idx]
@@ -106,25 +87,23 @@ class MatchHistory(Resource):
           trait_json['name'] = trait_json['name'].replace('Set3_', '').lower()
           traits.append(trait_json)
       
-      # Creates an object for other players in the same match 
-      match_dict = {}
-      match_dict['traits'] = traits
-      match_dict['position'] = player['placement']
-      match_dict['level'] = player['level']
-      matchhistory.append(match_dict)
-      
       units_list = player['units']
       for units_json in units_list:
         units_json['character_id'] = units_json['character_id'].replace('TFT3_', '').lower()
         if bin_galxy: units_json['items'].remove(999) #delete the disabled item slot added in binary star galaxy
+       
+      match_dict = {
+        'traits': traits,
+        'queue': j['info']['queue_id'],
+        'position': player['placement'],
+        'level': player['level'],
+        'units': units_list
+      }
+      matchhistory.append(match_dict)
       
-      match_dict['units'] = units_list
-      match_dict['queue'] = j['info']['queue_id']
-      # matchhistory.append(units_list)
-      
-    return jsonify(playerinfo=playerinfo, matchhistory=matchhistory)
+    return jsonify(matchhistory=matchhistory)
 
-@api.doc(params={'summoner': 'Enter summoner name:', 'server':'Enter server:'})
+@api.doc(paths={})
 class RankInfo(Resource):
   """
   Returns the ranked information on for a summoner
@@ -136,9 +115,8 @@ class RankInfo(Resource):
     "losses": {int}
   }
   """
-  def get(self):
+  def get(self, server, summoner_id):
     response_json = {}
-    summoner_id = getSummoner()['id']
     rank_json = tft.league.by_summoner(region=server, encrypted_summoner_id=summoner_id)
     
     if rank_json:
@@ -153,14 +131,10 @@ class RankInfo(Resource):
     response_json['losses'] = rank_json['losses']
     return jsonify(response_json)
 
-
-
-
-
 # Endpoints
-api.add_resource(SummonerInfo, '/api', '/api/summonerinfo')
-api.add_resource(MatchHistory, '/api/matchhistory')
-api.add_resource(RankInfo, '/api/rankinfo')
+api.add_resource(SummonerInfo, '/api/summonerinfo/<string:server>/<string:summoner>')
+api.add_resource(MatchHistory, '/api/matchhistory/<string:server>/<string:puuid>')
+api.add_resource(RankInfo, '/api/rankinfo/<string:server>/<string:summoner_id>')
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port=8000)

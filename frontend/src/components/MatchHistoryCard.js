@@ -51,7 +51,7 @@ function MatchHistory(props) {
           />
           <CardContent>
             <Synergy traits={props.traits}/>       {/* Synergy Component */}
-            <ChampionList units={props.units} /> {/* ChampionList Component */}
+            <ChampionList key={props.matchkey} matchkey={props.matchkey} units={props.units} /> {/* ChampionList Component */}
           </CardContent>
           <CardActions>
             <IconButton 

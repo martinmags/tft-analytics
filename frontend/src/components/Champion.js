@@ -24,8 +24,7 @@ const useStyles =  makeStyles((theme) =>({
 }));
 
 function Champion(props) {
-  const classes = useStyles();
-  
+  const classes = useStyles();  
   const dic = {1: brown[800], 2: grey[800], 3: amber[800]}
   
   return (
@@ -33,8 +32,8 @@ function Champion(props) {
         {/* CHAMPION STARS */}
         <Grid container direction="row">
           {[...Array(props.stars)].map((e, idx) => 
-            <Grid item>
-              <StarIcon style={{ color: dic[props.stars]}} key={idx} className={classes.cardicon} />
+            <Grid key={`${props.champkey}${idx}`} item>
+              <StarIcon style={{ color: dic[props.stars]}} className={classes.cardicon} />
             </Grid>)
           } 
         </Grid>
@@ -45,9 +44,8 @@ function Champion(props) {
         {/* CHAMPION ITEMS GRID */}
         <Grid container direction="row">
           { props.items.map((item, idx) =>
-            <Grid item> 
+            <Grid key={`${props.champkey}${idx}`} item> 
               <Avatar
-                key={idx}
                 title={item}
                 className={classes.cardicon}              
                 src={`http://d2tjld7v9ietdh.cloudfront.net/items/${
