@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0f4ea92e.chunk.css",
+    "main.js": "/static/js/main.48bd0d02.chunk.js",
+    "main.js.map": "/static/js/main.48bd0d02.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.9dfb40ef.js",
+    "runtime-main.js.map": "/static/js/runtime-main.9dfb40ef.js.map",
+    "static/js/2.8de2de45.chunk.js": "/static/js/2.8de2de45.chunk.js",
+    "static/js/2.8de2de45.chunk.js.map": "/static/js/2.8de2de45.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e9aef7fd3897dfe1ff9431b9d1490c29.js": "/precache-manifest.e9aef7fd3897dfe1ff9431b9d1490c29.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.0f4ea92e.chunk.css.map": "/static/css/main.0f4ea92e.chunk.css.map",
+    "static/js/2.8de2de45.chunk.js.LICENSE.txt": "/static/js/2.8de2de45.chunk.js.LICENSE.txt",
+    "static/media/Emblem_Gold.png": "/static/media/Emblem_Gold.19be519b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9dfb40ef.js",
+    "static/js/2.8de2de45.chunk.js",
+    "static/css/main.0f4ea92e.chunk.css",
+    "static/js/main.48bd0d02.chunk.js"
+  ]
+}
