@@ -11,6 +11,9 @@ node_modules
 # production
 /build
 
+# netlify
+.netlify/
+
 # misc
 .env
 .DS_Store
@@ -22,6 +25,11 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.zip*
 
-# Local Netlify folder
-.netlify
+
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
