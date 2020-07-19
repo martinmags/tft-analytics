@@ -10,7 +10,22 @@ import Header from './components/Header'
 import HomePage from './templates/HomePage'
 import SummonerPage from './templates/SummonerPage'
 
-let theme = createMuiTheme();
+let theme = createMuiTheme({
+  palette:{
+    secondary:{
+      main:"#FFBC42"
+    },
+    background:{
+      paper: '#270D2C',
+      default:'#62206D'
+    },
+    text:{
+      primary:'#ffffff',
+      secondary: '#ffffff'
+    },
+    spacing:8,
+  } 
+});
 theme = responsiveFontSizes(theme);
 function App() {
   const [summoner, setSummoner] = useState(null)
@@ -18,17 +33,18 @@ function App() {
 
   return (
     <div className="App">
-      <CssBaseline/>
-      <ThemeProvider theme={theme}>
-      <Router>
-          <Header/> 
-          <SummonerContext.Provider value={value}>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/summonerstats/:region/:summonername" component={SummonerPage} />
-            </Switch>
-          </SummonerContext.Provider>
-      </Router>
+
+      <ThemeProvider theme={theme}>      
+        <CssBaseline/>
+        <Router>
+            <Header/> 
+            <SummonerContext.Provider value={value}>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/summonerstats/:region/:summonername" component={SummonerPage} />
+              </Switch>
+            </SummonerContext.Provider>
+        </Router>
       </ThemeProvider>
     </div>
   );
