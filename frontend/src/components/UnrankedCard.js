@@ -12,7 +12,7 @@ const useStyles =  makeStyles((theme) =>({
 function SummonerRankCard(props) {
   const classes = useStyles();
   return (
-    <Grid item xs={10} sm={5}>
+    <Grid item xs={12} sm={6}>
       <Card className={classes.root}>
         <CardHeader
           avatar={
