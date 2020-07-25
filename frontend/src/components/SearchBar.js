@@ -21,8 +21,20 @@ const useStyles =  makeStyles((theme) =>({
   },
   button:{
     height: 48
+  },
+  textField:{
+    backgroundColor: '#892D99',
+    borderRadius:"0px 5px 5px 0px",
+    border: `1px solid ${theme.palette.background.paper}`,
+ 
+  },
+  controller:{
+    backgroundColor: '#892D99',
+    borderRadius:"5px 0px 0px 5px",
+    border: `1px solid ${theme.palette.background.paper}`
   }
 }));
+
 
 function Search() {
   const classes = useStyles();
@@ -43,7 +55,7 @@ function Search() {
   }
 
   return (
-    <div>
+    <Grid container item justify="center" >
       {/* User Error Code */}
       <Grid item xs={12}>
         {errors.summonername && <Alert severity="error">Summoner Name is required.</Alert>}
@@ -53,34 +65,41 @@ function Search() {
           </Box>
         }
       </Grid>
-      <Grid container item direction="row" justify="center" className={classes.form}>
-        <form onSubmit={ handleSubmit(onSubmit) }>
-          <Controller
-            as={
-              <FormControl variant="filled" size="small">
-                <InputLabel shrink>Region</InputLabel>
-                <Select defaultValue="na1" name="region" onChange={handleChange}>
-                  {regions.map((region) => <MenuItem key={region} value={region}>{region}</MenuItem>)}
-                </Select>
-              </FormControl>
-            }
-            control={control}
-            name="region"
-            defaultValue="na1"
-          />
-          <TextField   
-            inputRef={register({ required: true })}
-            label="Summoner Name"
-            size="small"
-            name="summonername"
-            variant="filled"
-          />
-          <Button className={classes.button} variant="contained" type="submit" size="small" color="secondary" ><SearchIcon/></Button>
-        </form>
-        { (urlRedirect !== '') && (<Redirect to={urlRedirect} />) }
+      <form onSubmit={ handleSubmit(onSubmit) }>
+        <Grid container item direction="row"  className={classes.form} xs={12}>
+          <Grid item xs={2}>
+            <Controller
+                className={classes.controller}
+                as={
+                  <FormControl variant="filled" size="small">
+                    <InputLabel shrink>Region</InputLabel>
+                    <Select defaultValue="na1" name="region" onChange={handleChange}>
+                      {regions.map((region) => <MenuItem key={region} value={region}>{region}</MenuItem>)}
+                    </Select>
+                  </FormControl>
+                }
+                control={control}
+                name="region"
+                defaultValue="na1"
+              />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField   
+              inputRef={register({ required: true })}
+              label="Summoner Name"
+              size="small"
+              name="summonername"
+              variant="filled"
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button className={classes.button} variant="contained" type="submit" size="small" color="secondary" ><SearchIcon/></Button>
+          </Grid>
+        </Grid>        
+      </form>
+      { (urlRedirect !== '') && (<Redirect to={urlRedirect} />) }
 
-      </Grid>
-    </div>
+    </Grid>
   )
 }
 

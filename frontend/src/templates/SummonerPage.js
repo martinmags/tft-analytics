@@ -1,6 +1,6 @@
 import React from 'react';   
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress, Typography } from '@material-ui/core';
+import { Box, Grid, CircularProgress, Typography } from '@material-ui/core';
 import SummonerInfo from '../components/SummonerInfo';
 import MatchHistoryCard from '../components/MatchHistoryCard';
 import { useParams } from 'react-router-dom';
@@ -98,8 +98,10 @@ function SummonerPage() {
   return (
     <div className={classes.root}>
       <Grid container direction="column" justify="center" >
-        {summonerinfo_content}
-        {matchhistory_content}
+        <Box mx={{ xs:4, sm:8,md:16, l:32}}>
+          {summonerinfo_content}
+          {matchhistory_content}
+        </Box>
       </Grid>
     </div>
   );

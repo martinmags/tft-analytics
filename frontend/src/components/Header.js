@@ -9,8 +9,8 @@ const useStyles =  makeStyles((theme) =>({
     fontSize: 16*2,
     paddingTop: 8*2,
   },
-  grey:{
-    backgroundColor: "#78909C"
+  bg:{
+    backgroundColor: theme.palette.background.paper
   }
 }));
 
@@ -18,11 +18,11 @@ function Header() {
   const classes = useStyles();
 
   return (
-    <AppBar className={classes.grey} position="static">
+    <AppBar className={classes.bg} position="static">
       <Grid container direction="column" justify="center" alignItems="center" >
 
         {/* Home Button */}
-        <Grid item xs={12}>
+        <Grid item  >
           <Typography className={classes.title}>
             <Link component={RouterLink} to="/">TFT-Analytics</Link>
           </Typography>
