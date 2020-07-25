@@ -4,10 +4,10 @@ from riotwatcher import TftWatcher, ApiError
 from settings import riot_key
 from flask_cors import CORS
 
-app = Flask(__name__)
-api = Api(app)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
-app.config['CORS_HEADERS'] = 'Content-Type'
+application = Flask(__name__)
+api = Api(application)
+cors = CORS(application, resources={r"*": {"origins": "*"}})
+application.config['CORS_HEADERS'] = 'Content-Type'
 
 api_key = riot_key
 tft = TftWatcher(api_key)
@@ -141,4 +141,4 @@ api.add_resource(MatchHistory, '/api/matchhistory/<string:server>/<string:puuid>
 api.add_resource(RankInfo, '/api/rankinfo/<string:server>/<string:summoner_id>')
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=8000)
+  application.run(debug=True, host='0.0.0.0', port=8000)
