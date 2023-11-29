@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles';
 import {  Box, Grid, Card, CardContent, CardHeader, CardActions, IconButton, Typography } from '@material-ui/core';
@@ -57,7 +57,7 @@ function MatchHistory(props) {
             />
             <CardContent>
               <Synergy traits={props.traits}/>       {/* Synergy Component */}
-              <ChampionList key={props.matchkey} matchkey={props.matchkey} units={props.units} /> {/* ChampionList Component */}
+              <ChampionList matchkey={props.matchkey} units={props.units} /> {/* ChampionList Component */}
             </CardContent>
             <CardActions>
               <IconButton 

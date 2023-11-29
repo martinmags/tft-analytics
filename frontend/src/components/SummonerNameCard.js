@@ -10,7 +10,7 @@ const useStyles =  makeStyles((theme) =>({
 
 function SummonerNameCard(props) {
   const classes = useStyles();
-  const url = `http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${props.profileiconid}.png`
+  const url = `http://ddragon.leagueoflegends.com/cdn/13.20.1/img/profileicon/${props.profileiconid}.png`
   return (
     <Grid item xs={12} sm={6}>
       

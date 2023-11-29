@@ -11,7 +11,7 @@ function ChampionList(props) {
           champkey={`${props.matchkey}${idx}`} 
           champ={unit.character_id} 
           stars={unit.tier} 
-          items={unit.items}
+          items={unit.itemNames}
           cost={unit.rarity}/> )
         : null 
       }
