@@ -62,6 +62,7 @@ function SummonerPage() {
 
   // State 1: Successful Fetches
   if (summoner.data && rankStats.data){
+    console.log(`Successfully Retrieved: summoner data - ${summoner.data} || ranked data - ${rankStats.data}`)
     const { name, profileIconId, summonerLevel } = summoner.data
     const { division='', losses=0, wins=0, lp=0, tier='unranked' } = rankStats.data
 
@@ -74,10 +75,12 @@ function SummonerPage() {
   if (matchHistory.data){
     const { matchhistory } = matchHistory.data
 
+    console.log(`Successfully Retrieved: match history data - ${matchHistory.data}`)
+
     matchhistory_content = (
       <Grid item xs={12}>
         { matchhistory.length > 0 ? matchhistory.map((match,idx) => 
-          <MatchHistoryCard key={`match${idx}`} matchkey={`match${idx}`} units={match.units} traits={match.traits} position={match.position} level={match.level} queue={match.queue}/>) : 
+          <MatchHistoryCard matchkey={`match${idx}`} units={match.units} traits={match.traits} position={match.position} level={match.level} queue={match.queue}/>) : 
           <Typography className={classes.center}>No Matches Found</Typography> 
         }
       </Grid>  
